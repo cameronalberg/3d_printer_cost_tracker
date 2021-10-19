@@ -1,6 +1,8 @@
 package application.jobs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class JobList {
     private HashMap<String, PrintJob> jobs;
@@ -31,10 +33,14 @@ public class JobList {
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (PrintJob job : jobs.values()) {
-            output += job + "\n\n";
+            output.append(job).append("\n\n");
         }
-        return output;
+        return output.toString();
+    }
+
+    public List<PrintJob> getJobs() {
+        return new ArrayList<>(jobs.values());
     }
 }

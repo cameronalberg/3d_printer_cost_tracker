@@ -1,16 +1,14 @@
 package application.jobs;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Project {
-    private String name;
-    private boolean active = true;
-    private JobList jobs;
+    private final String name;
+    private final JobList jobs;
 
     public Project(String name) {
         this.name = name;
         this.jobs = new JobList();
-        this.active = true;
     }
 
     public String getName() {
@@ -19,10 +17,6 @@ public class Project {
 
     public void addJobToProject(PrintJob job) {
         jobs.add(job);
-    }
-
-    public PrintJob findJob(PrintJob job) {
-        return jobs.findJob(job);
     }
 
     public void removeJob(PrintJob job) {
@@ -37,7 +31,7 @@ public class Project {
         return jobs.jobCount();
     }
 
-    public String getJobs() {
-        return jobs.toString();
+    public List<PrintJob> getJobs() {
+        return jobs.getJobs();
     }
 }

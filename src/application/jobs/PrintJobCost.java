@@ -2,7 +2,7 @@ package application.jobs;
 
 import java.time.Duration;
 import java.util.HashMap;
-public class printJobCost {
+public class PrintJobCost {
     //set unchanging variables
     private static final double TAX_RATE = 10.25;
     private static final double MODEL_COST_PER_GRAM = 0.33075;
@@ -20,7 +20,7 @@ public class printJobCost {
     //each instance is given the year of the job that is being evaluated
     private int year;
 
-    public printJobCost(int currentYear) throws Exception{
+    public PrintJobCost(int currentYear){
         if (currentYear > 0) {
             this.year = currentYear;
         } else {
@@ -41,8 +41,8 @@ public class printJobCost {
         return hourlyRate;
     }
 
-    public double getJobCost(double modelConsumption, double supportConsumption, Duration buildDuration) throws Exception{
-        if (modelConsumption < 0 || supportConsumption < 0 || buildDuration.isNegative() == true) {
+    public double getJobCost(double modelConsumption, double supportConsumption, Duration buildDuration){
+        if (modelConsumption < 0 || supportConsumption < 0 || buildDuration.isNegative()) {
             throw new IllegalArgumentException("all parameters must be positive");
         }
         //calculate total cost using material cost, build time, and hourly rate (dependent on year)

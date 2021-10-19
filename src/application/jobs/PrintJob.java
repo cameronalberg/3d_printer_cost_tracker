@@ -1,7 +1,7 @@
 package application.jobs;
 
 import java.time.Duration;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 public class PrintJob {
     private final String jobID;
@@ -12,19 +12,21 @@ public class PrintJob {
     private String jobName;
     private String userName;
     private String projectName;
-    private Calendar startTime;
+    private LocalDateTime startTime;
 
-    public PrintJob(String jobID, String trayID, double modelConsumption, double supportConsumption, Duration buildDuration) {
+    public PrintJob(String jobID, String trayID, double modelConsumption,
+                    double supportConsumption, Duration buildDuration, LocalDateTime startTime) {
         this.jobID = jobID;
         this.trayID = trayID;
         this.modelConsumption = modelConsumption;
         this.supportConsumption = supportConsumption;
         this.buildDuration = buildDuration;
+        this.startTime = startTime;
     }
 
-    public double TotalCost() throws Exception {
-        int year = startTime.get(Calendar.YEAR);
-        printJobCost cost = new printJobCost(year);
+    public double TotalCost(){
+        int year = 2019; //placeholder
+        PrintJobCost cost = new PrintJobCost(year);
         return cost.getJobCost(modelConsumption, supportConsumption, buildDuration);
     }
 
@@ -59,4 +61,38 @@ public class PrintJob {
         this.setJobName(jobName);
 
     }
+
+    public String getTrayID() {
+        return this.trayID;
+    }
+
+    public String getJobName() {
+        return this.jobName;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public String getProjectName() {
+        return this.projectName;
+    }
+
+    public double getModelConsumption() {
+        return this.modelConsumption;
+    }
+
+    public double getSupportConsumption() {
+        return this.supportConsumption;
+    }
+
+    public LocalDateTime getDate() {
+        return this.startTime;
+    }
+
+    public Duration getBuildTime() {
+        return this.buildDuration;
+    }
+
+
 }
