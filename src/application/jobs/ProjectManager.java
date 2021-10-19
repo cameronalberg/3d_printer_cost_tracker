@@ -18,9 +18,20 @@ public class ProjectManager {
         this.projects.put("None", this.emptyProject);
     }
     public ProjectManager(String fileName) {
+
+        List<String> projectList = readProjectsFromFile(fileName);
+        addMultiple(projectList);
+    }
+
+    public ProjectManager(List<String> projectList) {
         this();
-        List<String> names = readProjectsFromFile(fileName);
-        for (String name : names) {
+        if (!projectList.isEmpty()) {
+            addMultiple(projectList);
+        }
+    }
+
+    private void addMultiple(List<String> projectList) {
+        for (String name : projectList) {
             add(new Project(name));
         }
     }
@@ -88,14 +99,14 @@ public class ProjectManager {
 
     @Override
     public String toString() {
-        String output = "Projects:\n";
+        StringBuilder output = new StringBuilder("Projects:\n");
         for (String name : this.projects.keySet()) {
-            if (name != "None") {
-                output += name + ": " + this.projects.get(name).getJobCount() + " linked jobs\n";
+            if (!name.equals("None")) {
+                output.append(name).append(": ").append(this.projects.get(name).getJobCount()).append(" linked jobs\n");
             }
         }
-        output += "Unlinked Jobs: " + emptyProject.getJobCount();
-        output += emptyProject.getJobs();
-        return output;
+        output.append("Unlinked Jobs: ").append(emptyProject.getJobCount());
+        output.append(emptyProject.getJobs());
+        return output.toString();
     }
 }

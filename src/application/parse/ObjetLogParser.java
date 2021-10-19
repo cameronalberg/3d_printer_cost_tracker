@@ -27,6 +27,9 @@ public class ObjetLogParser {
 
 
     private void moveToDate(LocalDate readFromDate) {
+        if (readFromDate == null) {
+            return;
+        }
         readFromDate = readFromDate.minusDays(4);
 
         while (scanner.hasNextLine()) {

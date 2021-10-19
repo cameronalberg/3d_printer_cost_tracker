@@ -13,19 +13,21 @@ public class CostTracker {
         String filename = "data/testdata.csv";
         String logFile = "data/log.txt";
         String databaseName = "testdatabase.db";
+        String backupProjectList = "data/projects.txt";
 
         //create new database connection instance
         PrintJobDatabase databaseConnection = new PrintJobDatabase(databaseName);
 
         //load database
         if (!databaseConnection.load()) {
-            databaseConnection.createNewDatabase();
             System.out.println("Database not found. Creating new database.");
+            databaseConnection.createNewDatabase();
         }
+
         System.out.println("Database was created on " + databaseConnection.getCreationDate());
         System.out.println("Database was last updated on "+ databaseConnection.getLastUpdated());
 
-        ProjectManager projects = new ProjectManager("data/projects.txt");
+        ProjectManager projects = new ProjectManager(databaseConnection.getProjects());
 
         //Read log files, and only read in data from the date that the database was last updated
         try {
@@ -46,9 +48,9 @@ public class CostTracker {
         //add parsed Project and Job Data to database
         databaseConnection.addData(projects);
 
-        databaseConnection.close();
 
-//        System.out.println(projects);
+        //close connection to database when finished
+        databaseConnection.close();
 
     }
 }

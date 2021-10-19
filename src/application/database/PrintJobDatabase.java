@@ -4,10 +4,13 @@ import application.jobs.PrintJob;
 import application.jobs.Project;
 import application.jobs.ProjectManager;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PrintJobDatabase {
@@ -38,7 +41,11 @@ public class PrintJobDatabase {
         String getLastUpdated = "SELECT dateUpdated FROM dates ORDER BY dateCreated DESC";
         result = statement.executeQuery(getLastUpdated);
         while (result.next()) {
-            this.lastUpdated = result.getDate("dateUpdated").toLocalDate();
+            try {
+                this.lastUpdated = result.getDate("dateUpdated").toLocalDate();
+            } catch (NullPointerException e) {
+                this.lastUpdated = null;
+            }
         }
 
     }
@@ -198,5 +205,21 @@ public class PrintJobDatabase {
             }
 
         }
+    }
+
+    public List<String> getProjects() {
+        List<String> projects = new ArrayList<>();
+        try {
+            String requestProjects = "SELECT * FROM projects";
+            Statement statement = database.createStatement();
+            ResultSet result = statement.executeQuery(requestProjects);
+
+            while (result.next()) {
+                projects.add(result.getString("name"));
+            }
+        } catch (SQLException ignored) {
+
+        }
+        return projects;
     }
 }
